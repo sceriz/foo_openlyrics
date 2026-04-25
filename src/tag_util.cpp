@@ -254,6 +254,24 @@ bool track_is_remote(metadb_handle_ptr track)
 #endif
 }
 
+bool track_file_exists(metadb_handle_ptr track)
+{
+    if(track_is_remote(track))
+    {
+        return true; // Remote tracks don't have local files to check
+    }
+
+    try
+    {
+        const char* path = track->get_path();
+        return filesystem::g_exists(path, fb2k::noAbort);
+    }
+    catch(const std::exception&)
+    {
+        return false;
+    }
+}
+
 bool starts_with_ignore_case(std::string_view input, std::string_view prefix)
 {
     if(input.length() < prefix.length())
