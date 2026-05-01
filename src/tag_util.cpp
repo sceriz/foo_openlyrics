@@ -254,13 +254,8 @@ bool track_is_remote(metadb_handle_ptr track)
 #endif
 }
 
-bool track_file_exists(metadb_handle_ptr track)
+bool track_exists_on_filesystem(metadb_handle_ptr track)
 {
-    if(track_is_remote(track))
-    {
-        return true; // Remote tracks don't have local files to check
-    }
-
     try
     {
         const char* path = track->get_path();
